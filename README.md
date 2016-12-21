@@ -1,9 +1,9 @@
 # chain
-call chain, bool chain, to be extend
+basic call chain, bool chain, to be extend..
 
 Usage:
 -----------------
-basic chain call:
+**basic chain call:**
 ```go
 func TestBaseChainCall(t *testing.T) {
 	NewBaseChain().Call(test1, 1).Call(test1, 2)
@@ -21,8 +21,14 @@ func test1(a int) {
 }
 ```
 
-bool chain call: (stop call when there is a func return false)
+**bool chain call:** 
+Use `Must`, `Should` to restrict how many conditions it's gonna to match.
+If any `Must` func returns false, it breaks execution immediately.
 ```go
+func TestBoolChainMust(t *testing.T) {
+	NewBoolChain().Must(less, 1, 2).MinShouldMatch(1).Should(less, 5, 2).Should(2, 3)
+}
+
 func TestBoolChainCall(t *testing.T) {
 	NewBoolChain().Call(less, 1, 2).Call(less, 5, 2).Call(2, 3)
 }
@@ -40,3 +46,4 @@ func less(a, b int) bool {
 	return a < b
 }
 ```
+
